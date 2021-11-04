@@ -5,6 +5,8 @@ on:
     tags:
     - 'v*'
     - 'test-v*'
+    branches:
+    - 'colima*'
   pull_request:
 
 env:
