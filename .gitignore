@@ -4,3 +4,5 @@
 /rd.yaml
 /std.yaml
 /nerdctl-*
+/buildx-*
+.idea/

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu
+set -eux
 
 cat <<EOF >"${EDITION}.yaml"
 arch: "${ARCH}"

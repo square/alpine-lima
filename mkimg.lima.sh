@@ -28,7 +28,7 @@ profile_lima() {
             apks="$apks e2fsprogs lsblk sfdisk shadow sudo udev"
         fi
         if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
-            apks="$apks qemu-aarch64"
+            apks="$apks qemu-aarch64 qemu-x86_64 qemu-arm qemu-i386 qemu-ppc64le qemu-riscv64 qemu-s390x"
         fi
         if [ "${LIMA_INSTALL_K3S}" == "true" ]; then
             apks="$apks k3s"

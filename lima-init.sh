@@ -18,7 +18,7 @@ mount -o ro,mode=0700,dmode=0700,overriderockperm,exec,uid=0 "${LIMA_CIDATA_DEV}
 
 # Set hostname
 LIMA_CIDATA_HOSTNAME="$(awk '/^local-hostname:/ {print $2}' "${LIMA_CIDATA_MNT}"/meta-data)"
-hostname "${LIMA_CIDATA_HOSTNAME}"
+hostname "${LIMA_CIDATA_HOSTNAME#"lima-"}" # remove lima- prefix
 
 # Create user
 LIMA_CIDATA_HOMEDIR="/home/${LIMA_CIDATA_USER}.linux"

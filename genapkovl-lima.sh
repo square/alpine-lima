@@ -160,6 +160,13 @@ fi
 
 if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
     echo "qemu-aarch64" >> "$tmp"/etc/apk/world
+    echo "qemu-x86_64" >> "$tmp"/etc/apk/world
+    echo "qemu-arm" >> "$tmp"/etc/apk/world
+    echo "qemu-i386" >> "$tmp"/etc/apk/world
+    echo "qemu-ppc64le" >> "$tmp"/etc/apk/world
+    echo "qemu-riscv64" >> "$tmp"/etc/apk/world
+    echo "qemu-riscv64" >> "$tmp"/etc/apk/world
+    echo "qemu-s390x" >> "$tmp"/etc/apk/world
 
     mkdir -p "${tmp}/etc/init.d/"
     APKBUILD=/home/build/aports/community/qemu-openrc/APKBUILD
