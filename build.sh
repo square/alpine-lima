@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -eu
 
+# prepare multi-arch image
+docker pull --platform "linux/${ARCH_ALIAS}" "tonistiigi/binfmt"
+docker tag "tonistiigi/binfmt" "colima-binfmt" # use different alias to avoid clashes
+docker save "colima-binfmt" >"binfmt-${ARCH_ALIAS}.tar"
+
 mkdir -p iso
 
 TAG="${EDITION}-${ALPINE_VERSION}"
@@ -17,6 +22,7 @@ docker run --rm \
     -v "${PWD}/lima-init-local.openrc:/home/build/lima-init-local.openrc:ro" \
     -v "${PWD}/lima-network.awk:/home/build/lima-network.awk:ro" \
     -v "${PWD}/nerdctl-${NERDCTL_VERSION}-${ARCH}:/home/build/nerdctl.tar.gz:ro" \
+    -v "${PWD}/binfmt-${ARCH_ALIAS}.tar:/home/build/binfmt.tar:ro" \
     -v "${PWD}/sshd.pam:/home/build/sshd.pam:ro" \
     $(env | grep ^LIMA_ | xargs -n 1 printf -- '-e %s ') \
     -e "LIMA_REPO_VERSION=${REPO_VERSION}" \
@@ -30,5 +36,6 @@ docker run --rm \
     --repository "http://dl-cdn.alpinelinux.org/alpine/${REPO_VERSION}/community" \
     --profile lima
 
+# sha512sum is not on macOS by default, fixable with `brew install coreutils`
 ISO="alpine-lima-${EDITION}-${ALPINE_VERSION}-${ARCH}.iso"
-cd iso && sha512sum "${ISO}" > "${ISO}.sha512sum"
+cd iso && sha512sum "${ISO}" >"${ISO}.sha512sum"
