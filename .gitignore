@@ -6,3 +6,4 @@
 /nerdctl-*
 /buildx-*
 .idea/
+.vscode/
