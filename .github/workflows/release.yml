@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - "colima-*"
+      - "colima-v*"
     tags:
       - "v*"
       - "test-v*"

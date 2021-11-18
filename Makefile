@@ -21,7 +21,7 @@ NERDCTL_VERSION=0.13.0
 
 .PHONY: mkimage
 mkimage:
-	cd src/aports && git fetch && git checkout $(GIT_TAG)
+	cd src/aports && git fetch --tags && git checkout $(GIT_TAG)
 	docker build \
 		--tag mkimage:$(ALPINE_VERSION)-$(ARCH) \
 		--build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
