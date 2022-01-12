@@ -129,10 +129,10 @@ if [ "${LIMA_INSTALL_LIMA_INIT}" == "true" ]; then
 fi
 
 if [ "${LIMA_INSTALL_CLOUD_INIT}" == "true" ]; then
-    echo cloud-init >> "$tmp"/etc/apk/world
-    echo e2fsprogs >> "$tmp"/etc/apk/world
-    echo sudo >> "$tmp"/etc/apk/world
-   
+    echo cloud-init >>"$tmp"/etc/apk/world
+    echo e2fsprogs >>"$tmp"/etc/apk/world
+    echo sudo >>"$tmp"/etc/apk/world
+
     rc_add cloud-init-local boot
     rc_add cloud-config default
     rc_add cloud-final default
@@ -171,6 +171,11 @@ if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
     # where /etc/init.d/qemu-binfmt will be looking for it
     mkdir -p "${tmp}/usr/bin/"
     cp /binfmt/qemu-${OTHERARCH} "${tmp}/usr/bin/"
+    cp /binfmt/qemu-arm "${tmp}/usr/bin/"
+    cp /binfmt/qemu-i386 "${tmp}/usr/bin/"
+    cp /binfmt/qemu-ppc64le "${tmp}/usr/bin/"
+    cp /binfmt/qemu-riscv64 "${tmp}/usr/bin/"
+    cp /binfmt/qemu-s390x "${tmp}/usr/bin/"
 
     # Copy QEMU license into /usr/share/doc (using Debian naming convention)
     mkdir -p "${tmp}/usr/share/doc/qemu/"
@@ -227,10 +232,6 @@ fi
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
     echo "sshfs" >>"$tmp"/etc/apk/world
 fi
-
-# binfmt
-mkdir -p "${tmp}/usr/local/colima"
-cp /home/build/binfmt.tar "${tmp}/usr/local/colima/binfmt.tar"
 
 mkdir -p "${tmp}/etc"
 mkdir -p "${tmp}/usr"

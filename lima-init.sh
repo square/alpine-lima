@@ -31,7 +31,7 @@ echo "${LIMA_CIDATA_USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/90-lima-users
 LIMA_CIDATA_SSHDIR="${LIMA_CIDATA_HOMEDIR}"/.ssh
 mkdir -p -m 700 "${LIMA_CIDATA_SSHDIR}"
 awk '/ssh-authorized-keys/ {flag=1; next} /^ *$/ {flag=0} flag {sub(/^ +- /, ""); gsub("\"", ""); print $0}' \
-	"${LIMA_CIDATA_MNT}"/user-data >"${LIMA_CIDATA_SSHDIR}"/authorized_keys
+    "${LIMA_CIDATA_MNT}"/user-data >"${LIMA_CIDATA_SSHDIR}"/authorized_keys
 LIMA_CIDATA_GID=$(id -g "${LIMA_CIDATA_USER}")
 chown -R "${LIMA_CIDATA_UID}:${LIMA_CIDATA_GID}" "${LIMA_CIDATA_SSHDIR}"
 chmod 600 "${LIMA_CIDATA_SSHDIR}"/authorized_keys
@@ -39,18 +39,18 @@ chmod 600 "${LIMA_CIDATA_SSHDIR}"/authorized_keys
 # Rename network interfaces according to network-config setting
 mkdir -p /var/lib/lima-init
 IP_RENAME=/var/lib/lima-init/ip-rename
-ip -o link > /var/lib/lima-init/ip-link
+ip -o link >/var/lib/lima-init/ip-link
 awk -f /usr/bin/lima-network.awk \
     /var/lib/lima-init/ip-link \
     "${LIMA_CIDATA_MNT}"/network-config \
-    > ${IP_RENAME}
+    >${IP_RENAME}
 chmod +x ${IP_RENAME}
 ip link
 ${IP_RENAME}
 ip link
 
 # Create /etc/network/interfaces
-awk -f- "${LIMA_CIDATA_MNT}"/network-config <<'EOF' > /etc/network/interfaces
+awk -f- "${LIMA_CIDATA_MNT}"/network-config <<'EOF' >/etc/network/interfaces
 BEGIN {
     print "auto lo"
     print "iface lo inet loopback\n"
@@ -64,7 +64,7 @@ EOF
 # Assign interface names by MAC address
 # TODO: this should automatically assign the right interface names when the instance is
 # restarted; alas it doesn't seem to have any effect.
-awk -f- "${LIMA_CIDATA_MNT}"/network-config <<'EOF' > /etc/udev/rules.d/70-persistent-net.rules
+awk -f- "${LIMA_CIDATA_MNT}"/network-config <<'EOF' >/etc/udev/rules.d/70-persistent-net.rules
 /macaddress/ {
     gsub("'", "")
     mac = $2
@@ -76,7 +76,7 @@ EOF
 
 # Add static nameservers to /etc/resolv.conf
 DNS=$(awk '/nameservers:/{flag=1; next} /^[^ ]/{flag=0} flag {gsub("^ +- +", ""); print}' \
-          "${LIMA_CIDATA_MNT}"/user-data | tr "\n" " ")
+    "${LIMA_CIDATA_MNT}"/user-data | tr "\n" " ")
 
 if [ -n "${DNS}" ]; then
     sed -i "/export dns/a dns=\"${DNS}\"" /usr/share/udhcpc/default.script
