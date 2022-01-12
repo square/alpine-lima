@@ -4,6 +4,7 @@
 /rd.yaml
 /std.yaml
 /nerdctl-*
+/qemu-*
 /buildx-*
 /binfmt-*
 .idea/

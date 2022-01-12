@@ -1,7 +1,7 @@
 profile_lima() {
 	profile_standard
 	profile_abbrev="lima"
-	title="Linux on Mac"
+	title="Linux Virtual Machines"
 	desc="Similar to standard.
 		Slimmed down kernel.
 		Optimized for virtual systems.
@@ -26,9 +26,6 @@ profile_lima() {
         fi
         if [ "${LIMA_INSTALL_LIMA_INIT}" == "true" ]; then
             apks="$apks e2fsprogs lsblk sfdisk shadow sudo udev"
-        fi
-        if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
-            apks="$apks qemu-aarch64 qemu-x86_64 qemu-arm qemu-i386 qemu-ppc64le qemu-riscv64 qemu-s390x"
         fi
         if [ "${LIMA_INSTALL_K3S}" == "true" ]; then
             apks="$apks k3s"
