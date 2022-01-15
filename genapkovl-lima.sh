@@ -105,10 +105,12 @@ cp /home/build/sshd.pam "${tmp}/etc/pam.d/sshd"
 if [ "${LIMA_INSTALL_LIMA_INIT}" == "true" ]; then
     rc_add lima-init default
     rc_add lima-init-local default
+    rc_add buildkitd default
 
     mkdir -p "${tmp}/etc/init.d/"
     cp /home/build/lima-init.openrc "${tmp}/etc/init.d/lima-init"
     cp /home/build/lima-init-local.openrc "${tmp}/etc/init.d/lima-init-local"
+    cp /home/build/lima-buildkitd.openrc "${tmp}/etc/init.d/buildkitd"
 
     mkdir -p "${tmp}/usr/bin/"
     cp /home/build/lima-init.sh "${tmp}/usr/bin/lima-init"

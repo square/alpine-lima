@@ -1,0 +1,34 @@
+#!/sbin/openrc-run
+supervisor=supervise-daemon
+
+name="Buildkit Daemon"
+description="Persistent process that manages buildkit"
+description_reload="Reload configuration without exiting"
+
+command="${BUILDKITD_BINARY:-/usr/local/bin/buildkitd}"
+command_args="${BUILDKITD_OPTS}"
+BUILDKITD_LOGFILE="${BUILDKITD_LOGFILE:-/var/log/${RC_SVCNAME}.log}"
+BUILDKITD_ERRFILE="${BUILDKITD_ERRFILE:-${BUILDKITD_LOGFILE}}"
+BUILDKITD_OUTFILE="${BUILDKITD_OUTFILE:-${BUILDKITD_LOGFILE}}"
+supervise_daemon_args="--stderr \"${BUILDKITD_ERRFILE}\" --stdout \"${BUILDKITD_OUTFILE}\""
+
+extra_started_commands="reload"
+
+rc_ulimit="${BUILDKITD_ULIMIT:--c unlimited -n 1048576 -u unlimited}"
+
+retry="${BUILDKITD_RETRY:-TERM/60/KILL/10}"
+
+depend() {
+        need sysfs cgroups
+        after iptables ip6tables
+}
+
+start_pre() {
+        checkpath -f -m 0644 -o root:root "$BUILDKITD_ERRFILE" "$BUILDKITD_OUTFILE"
+}
+
+reload() {
+        ebegin "Reloading configuration"
+        $supervisor $RC_SVCNAME --signal HUP
+        eend $?
+}
