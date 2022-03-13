@@ -149,18 +149,18 @@ EOF
 fi
 
 if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
-    echo libseccomp >> "$tmp"/etc/apk/world
-    echo runc >> "$tmp"/etc/apk/world
-    echo containerd >> "$tmp"/etc/apk/world
-    echo tini-static >> "$tmp"/etc/apk/world
-    echo device-mapper-libs >> "$tmp"/etc/apk/world
-    echo docker-engine >> "$tmp"/etc/apk/world
-    echo docker-openrc >> "$tmp"/etc/apk/world
-    echo docker-cli >> "$tmp"/etc/apk/world
-    echo docker >> "$tmp"/etc/apk/world
+    echo libseccomp >>"$tmp"/etc/apk/world
+    echo runc >>"$tmp"/etc/apk/world
+    echo containerd >>"$tmp"/etc/apk/world
+    echo tini-static >>"$tmp"/etc/apk/world
+    echo device-mapper-libs >>"$tmp"/etc/apk/world
+    echo docker-engine >>"$tmp"/etc/apk/world
+    echo docker-openrc >>"$tmp"/etc/apk/world
+    echo docker-cli >>"$tmp"/etc/apk/world
+    echo docker >>"$tmp"/etc/apk/world
 
     # kubectl port-forward requires `socat` when using docker-shim
-    echo socat >> "$tmp"/etc/apk/world
+    echo socat >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
@@ -205,7 +205,7 @@ if [ "${LIMA_INSTALL_CA_CERTIFICATES}" == "true" ]; then
 fi
 
 if [ "${LIMA_INSTALL_CNI_PLUGINS}" == "true" ]; then
-    echo "cni-plugins" >> "$tmp"/etc/apk/world
+    echo "cni-plugins" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_K3S}" == "true" ]; then
@@ -247,6 +247,13 @@ fi
 
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
     echo "sshfs" >>"$tmp"/etc/apk/world
+fi
+
+if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
+    echo "nano" >>"$tmp"/etc/apk/world
+    echo "vim" >>"$tmp"/etc/apk/world
+    echo "htop" >>"$tmp"/etc/apk/world
+    echo "tmux" >>"$tmp"/etc/apk/world
 fi
 
 mkdir -p "${tmp}/etc"
