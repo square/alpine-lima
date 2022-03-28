@@ -166,7 +166,7 @@ if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
     echo xz >>"$tmp"/etc/apk/world
 
     mkdir -p "${tmp}/etc/init.d/"
-    rc_add cri-dockerd default
+    rc_add cri-dockerd manual
     cp /home/build/lima-cri-dockerd.openrc "${tmp}/etc/init.d/cri-dockerd"
 fi
 
