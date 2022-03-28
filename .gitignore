@@ -7,5 +7,6 @@
 /qemu-*
 /buildx-*
 /binfmt-*
+/cri-dockerd-*
 .idea/
 .vscode/

@@ -160,7 +160,10 @@ if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
     echo docker >>"$tmp"/etc/apk/world
 
     # kubectl port-forward requires `socat` when using docker-shim
-    echo socat >>"$tmp"/etc/apk/world
+    echo socat >> "$tmp"/etc/apk/world
+
+    # So `docker buildx` can unpack tar.xz files
+    echo xz >> "$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
@@ -254,6 +257,17 @@ if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
     echo "vim" >>"$tmp"/etc/apk/world
     echo "htop" >>"$tmp"/etc/apk/world
     echo "tmux" >>"$tmp"/etc/apk/world
+fi
+
+if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
+    mkdir -p "${tmp}/cri-dockerd"
+    tar xz -C "${tmp}/cri-dockerd" -f /home/build/cri-dockerd.tar.gz
+    mkdir -p "${tmp}/usr/local/bin/"
+    cp "${tmp}/cri-dockerd/cri-dockerd" "${tmp}/usr/local/bin/"
+
+    #Copy the LICENSE file for cri-dockerd
+    mkdir -p "${tmp}/usr/share/doc/cri-dockerd/"
+    cp "${tmp}/cri-dockerd/LICENSE" "${tmp}/usr/share/doc/cri-dockerd/"
 fi
 
 mkdir -p "${tmp}/etc"
