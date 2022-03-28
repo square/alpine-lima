@@ -16,6 +16,7 @@ docker run --rm \
     -v "${PWD}/lima-init.openrc:/home/build/lima-init.openrc:ro" \
     -v "${PWD}/lima-init-local.openrc:/home/build/lima-init-local.openrc:ro" \
     -v "${PWD}/lima-buildkitd.openrc:/home/build/lima-buildkitd.openrc:ro" \
+    -v "${PWD}/lima-cri-dockerd.openrc:/home/build/lima-cri-dockerd.openrc:ro" \
     -v "${PWD}/lima-network.awk:/home/build/lima-network.awk:ro" \
     -v "${PWD}/nerdctl-${NERDCTL_VERSION}-${ARCH}:/home/build/nerdctl.tar.gz:ro" \
     -v "${PWD}/qemu-${QEMU_VERSION}-copying:/home/build/qemu-copying:ro" \

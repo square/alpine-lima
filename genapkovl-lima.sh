@@ -160,10 +160,10 @@ if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
     echo docker >>"$tmp"/etc/apk/world
 
     # kubectl port-forward requires `socat` when using docker-shim
-    echo socat >> "$tmp"/etc/apk/world
+    echo socat >>"$tmp"/etc/apk/world
 
     # So `docker buildx` can unpack tar.xz files
-    echo xz >> "$tmp"/etc/apk/world
+    echo xz >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
@@ -243,9 +243,13 @@ if [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
         done
     fi
 
-    rc_add buildkitd default
     mkdir -p "${tmp}/etc/init.d/"
+
+    rc_add buildkitd default
     cp /home/build/lima-buildkitd.openrc "${tmp}/etc/init.d/buildkitd"
+
+    rc_add cri-dockerd default
+    cp /home/build/lima-cri-dockerd.openrc "${tmp}/etc/init.d/cri-dockerd"
 fi
 
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
