@@ -46,4 +46,7 @@ profile_lima() {
         if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
             apks="$apks vim nano tmux htop"
         fi
+        if [ "${LIMA_INSTALL_COREDNS}" == "true" ]; then #
+            apks="$apks coredns"
+        fi
 }

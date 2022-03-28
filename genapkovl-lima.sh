@@ -263,6 +263,10 @@ if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
     echo "tmux" >>"$tmp"/etc/apk/world
 fi
 
+if [ "${LIMA_INSTALL_COREDNS}" == "true" ]; then #
+    echo "coredns" >>"$tmp"/etc/apk/world
+fi
+
 if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
     mkdir -p "${tmp}/cri-dockerd"
     tar xz -C "${tmp}/cri-dockerd" -f /home/build/cri-dockerd.tar.gz
