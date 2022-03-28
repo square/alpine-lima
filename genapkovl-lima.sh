@@ -164,6 +164,10 @@ if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
 
     # So `docker buildx` can unpack tar.xz files
     echo xz >>"$tmp"/etc/apk/world
+
+    mkdir -p "${tmp}/etc/init.d/"
+    rc_add cri-dockerd default
+    cp /home/build/lima-cri-dockerd.openrc "${tmp}/etc/init.d/cri-dockerd"
 fi
 
 if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
@@ -241,12 +245,8 @@ if [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
     fi
 
     mkdir -p "${tmp}/etc/init.d/"
-
     rc_add buildkitd default
     cp /home/build/lima-buildkitd.openrc "${tmp}/etc/init.d/buildkitd"
-
-    rc_add cri-dockerd default
-    cp /home/build/lima-cri-dockerd.openrc "${tmp}/etc/init.d/cri-dockerd"
 fi
 
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
