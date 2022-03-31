@@ -258,6 +258,7 @@ if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
     echo "vim" >>"$tmp"/etc/apk/world
     echo "htop" >>"$tmp"/etc/apk/world
     echo "tmux" >>"$tmp"/etc/apk/world
+    echo "curl" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_COREDNS}" == "true" ]; then #
