@@ -211,8 +211,18 @@ if [ "${LIMA_INSTALL_CA_CERTIFICATES}" == "true" ]; then
     echo "ca-certificates" >>"$tmp"/etc/apk/world
 fi
 
-if [ "${LIMA_INSTALL_CNI_PLUGINS}" == "true" ]; then
-    echo "cni-plugins" >>"$tmp"/etc/apk/world
+if [ "${LIMA_INSTALL_CNI_PLUGINS}" == "true" ] || [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
+    echo "cni-plugins" >> "$tmp"/etc/apk/world
+fi
+
+if [ "${LIMA_INSTALL_CNI_PLUGIN_FLANNEL}" == "true" ]; then
+    echo "cni-plugin-flannel" >> "$tmp"/etc/apk/world
+    ARCH=amd64
+    if [ "$(uname -m)" == "aarch64" ]; then
+        ARCH=arm64
+    fi
+    mkdir -p "${tmp}/usr/libexec/cni"
+    ln -s "flannel-${ARCH}" "${tmp}/usr/libexec/cni/flannel"
 fi
 
 if [ "${LIMA_INSTALL_K3S}" == "true" ]; then

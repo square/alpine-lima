@@ -1,7 +1,8 @@
-ALPINE_VERSION ?= 3.15.2
+ALPINE_VERSION ?= 3.15.4
 REPO_VERSION ?= $(shell echo "$(ALPINE_VERSION)" | sed -E 's/^([0-9]+\.[0-9]+).*/v\1/')
 GIT_TAG ?= $(shell echo "v$(ALPINE_VERSION)" | sed 's/^vedge$$/origin\/master/')
 BUILD_ID ?= $(shell git describe --tags)
+DOCKER ?= docker
 
 # Editions should be 5 chars or less because the full name is used as
 # the volume id, and cannot exceed 32 characters.
@@ -10,6 +11,9 @@ EDITION ?= std
 
 # Architecture defaults to the current system's.
 ARCH ?= $(shell uname -m)
+ifeq ($(strip $(ARCH)),arm64)
+ARCH = aarch64
+endif
 
 # ARCH is derived from `uname -m` but the alternate architecture name (e.g. amd64, arm64)
 # is required for Docker and asset downloads.
@@ -17,15 +21,16 @@ ARCH_ALIAS_x86_64 = amd64
 ARCH_ALIAS_aarch64 = arm64
 ARCH_ALIAS = $(shell echo "$(ARCH_ALIAS_$(ARCH))")
 
-NERDCTL_VERSION=0.18.0
+NERDCTL_VERSION=0.19.0
 QEMU_VERSION=v6.1.0
-CRI_DOCKERD_VERSION=0.2.0
+CRI_DOCKERD_VERSION=0.2.0-1
 BINFMT_IMAGE=tonistiigi/binfmt:qemu-$(QEMU_VERSION)
 
 .PHONY: mkimage
 mkimage:
 	cd src/aports && git fetch --tags && git checkout $(GIT_TAG)
-	docker build \
+	$(DOCKER) build \
+		--progress plain --no-cache \
 		--tag mkimage:$(ALPINE_VERSION)-$(ARCH) \
 		--build-arg ALPINE_VERSION=$(ALPINE_VERSION) \
 		--build-arg BINFMT_IMAGE=$(BINFMT_IMAGE) \
@@ -44,7 +49,7 @@ qemu-$(QEMU_VERSION)-copying:
 	curl -o $@ -Ls https://raw.githubusercontent.com/qemu/qemu/$(QEMU_VERSION)/COPYING
 
 cri-dockerd-$(CRI_DOCKERD_VERSION)-$(ARCH):
-	curl -o $@ -Ls https://github.com/Mirantis/cri-dockerd/releases/download/v$(CRI_DOCKERD_VERSION)/cri-dockerd-v$(CRI_DOCKERD_VERSION)-linux-$(ARCH_ALIAS).tar.gz
+	curl -o $@ -Ls https://github.com/rancher-sandbox/cri-dockerd/releases/download/v$(CRI_DOCKERD_VERSION)/cri-dockerd-v$(CRI_DOCKERD_VERSION)-linux-$(ARCH_ALIAS).tar.gz
 
 .PHONY: lima
 lima:
