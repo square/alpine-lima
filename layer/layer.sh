@@ -15,7 +15,7 @@ ${DOCKER} build \
 cd tar
 
 ${DOCKER} save "${TAG}" >${TAG}.tar
-gzip ${TAG}.tar
+gzip --force ${TAG}.tar
 
 # sha512sum is not on macOS by default, fixable with `brew install coreutils`
 sha512sum "${TAG}.tar.gz" >"${TAG}.tar.gz.sha512sum"
