@@ -10,3 +10,4 @@
 /cri-dockerd-*
 .idea/
 .vscode/
+tar/

@@ -77,3 +77,7 @@ run:
 		-device virtio-keyboard-pci \
 		-device virtio-mouse-pci \
 		-parallel none
+
+.PHONY: layer
+layer:
+	cd layer && DOCKER=$(DOCKER) ARCH=$(ARCH) ARCH_ALIAS=$(ARCH_ALIAS) ./layer.sh
