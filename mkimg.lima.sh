@@ -46,10 +46,4 @@ profile_lima() {
     if [ "${LIMA_INSTALL_IPTABLES}" == "true" ] || [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
         apks="$apks iptables ip6tables"
     fi
-    if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
-        apks="$apks vim nano tmux htop curl"
-    fi
-    if [ "${LIMA_INSTALL_COREDNS}" == "true" ]; then #
-        apks="$apks coredns"
-    fi
 }

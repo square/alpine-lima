@@ -212,11 +212,11 @@ if [ "${LIMA_INSTALL_CA_CERTIFICATES}" == "true" ]; then
 fi
 
 if [ "${LIMA_INSTALL_CNI_PLUGINS}" == "true" ] || [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
-    echo "cni-plugins" >> "$tmp"/etc/apk/world
+    echo "cni-plugins" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_CNI_PLUGIN_FLANNEL}" == "true" ]; then
-    echo "cni-plugin-flannel" >> "$tmp"/etc/apk/world
+    echo "cni-plugin-flannel" >>"$tmp"/etc/apk/world
     ARCH=amd64
     if [ "$(uname -m)" == "aarch64" ]; then
         ARCH=arm64
@@ -261,18 +261,6 @@ fi
 
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
     echo "sshfs" >>"$tmp"/etc/apk/world
-fi
-
-if [ "${LIMA_INSTALL_QOL}" == "true" ]; then # quality of life packages
-    echo "nano" >>"$tmp"/etc/apk/world
-    echo "vim" >>"$tmp"/etc/apk/world
-    echo "htop" >>"$tmp"/etc/apk/world
-    echo "tmux" >>"$tmp"/etc/apk/world
-    echo "curl" >>"$tmp"/etc/apk/world
-fi
-
-if [ "${LIMA_INSTALL_COREDNS}" == "true" ]; then #
-    echo "coredns" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
