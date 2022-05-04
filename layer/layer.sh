@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-set -eu
+set -eux
 
 DOCKER=${DOCKER:-docker}
 
 mkdir -p tar
 
-TAG="ubuntu-layer"
-FILE="${TAG}-${ARCH}"
+TAG="ubuntu-layer-${ARCH}"
 
 ${DOCKER} build \
     --tag "${TAG}" \
@@ -15,8 +14,8 @@ ${DOCKER} build \
 
 cd tar
 
-${DOCKER} save "${TAG}" >${FILE}.tar
-gzip ${FILE}.tar
+${DOCKER} save "${TAG}" >${TAG}.tar
+gzip ${TAG}.tar
 
 # sha512sum is not on macOS by default, fixable with `brew install coreutils`
-sha512sum "${FILE}.tar.gz" >"${FILE}.tar.gz.sha512sum"
+sha512sum "${TAG}.tar.gz" >"${TAG}.tar.gz.sha512sum"

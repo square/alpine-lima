@@ -181,11 +181,6 @@ if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
     # where /etc/init.d/qemu-binfmt will be looking for it
     mkdir -p "${tmp}/usr/bin/"
     cp /binfmt/qemu-${OTHERARCH} "${tmp}/usr/bin/"
-    cp /binfmt/qemu-arm "${tmp}/usr/bin/"
-    cp /binfmt/qemu-i386 "${tmp}/usr/bin/"
-    cp /binfmt/qemu-ppc64le "${tmp}/usr/bin/"
-    cp /binfmt/qemu-riscv64 "${tmp}/usr/bin/"
-    cp /binfmt/qemu-s390x "${tmp}/usr/bin/"
 
     # Copy QEMU license into /usr/share/doc (using Debian naming convention)
     mkdir -p "${tmp}/usr/share/doc/qemu/"
@@ -273,6 +268,9 @@ if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
     mkdir -p "${tmp}/usr/share/doc/cri-dockerd/"
     cp "${tmp}/cri-dockerd/LICENSE" "${tmp}/usr/share/doc/cri-dockerd/"
 fi
+
+mkdir -p "${tmp}/usr/share/colima"
+cp /home/build/ubuntu-layer.tar.gz "${tmp}/usr/share/colima"
 
 mkdir -p "${tmp}/etc"
 mkdir -p "${tmp}/usr"

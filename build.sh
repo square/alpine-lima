@@ -24,6 +24,7 @@ ${DOCKER} run --rm \
     -v "${PWD}/cri-dockerd-${CRI_DOCKERD_VERSION}-${ARCH}:/home/build/cri-dockerd.tar.gz:ro" \
     -v "${PWD}/lima-cri-dockerd.openrc:/home/build/lima-cri-dockerd.openrc:ro" \
     -v "${PWD}/sshd.pam:/home/build/sshd.pam:ro" \
+    -v "${PWD}/layer/tar/ubuntu-layer-${ARCH}.tar.gz:/home/build/ubuntu-layer.tar.gz:ro" \
     $(env | grep ^LIMA_ | xargs -n 1 printf -- '-e %s ') \
     -e "LIMA_REPO_VERSION=${REPO_VERSION}" \
     -e "LIMA_BUILD_ID=${BUILD_ID}" \

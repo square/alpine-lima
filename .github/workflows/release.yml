@@ -57,8 +57,4 @@ jobs:
           -a iso/alpine-lima-clm-${ALPINE_VERSION}-aarch64.iso.sha512sum
           -a iso/alpine-lima-clm-${ALPINE_VERSION}-x86_64.iso
           -a iso/alpine-lima-clm-${ALPINE_VERSION}-x86_64.iso.sha512sum
-          -a layer/tar/ubuntu-layer-aarch64.tar.gz
-          -a layer/tar/ubuntu-layer-aarch64.tar.gz.sha512sum
-          -a layer/tar/ubuntu-layer-x86_64.tar.gz
-          -a layer/tar/ubuntu-layer-x86_64.tar.gz.sha512sum
           -m "${tag}" --draft "${tag}"
