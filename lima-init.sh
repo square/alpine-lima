@@ -38,8 +38,8 @@ chmod 600 "${LIMA_CIDATA_SSHDIR}"/authorized_keys
 
 # Add mounts to /etc/fstab
 sed -i '/#LIMA-START/,/#LIMA-END/d' /etc/fstab
-echo "#LIMA-START" >> /etc/fstab
-awk -f- "${LIMA_CIDATA_MNT}"/user-data <<'EOF' >> /etc/fstab
+echo "#LIMA-START" >>/etc/fstab
+awk -f- "${LIMA_CIDATA_MNT}"/user-data <<'EOF' >>/etc/fstab
 /^mounts:/ {
     flag = 1
     next
@@ -54,9 +54,7 @@ flag {
     print $0
 }
 EOF
-echo "#LIMA-END" >> /etc/fstab
-mkmntdirs
-mount -a
+echo "#LIMA-END" >>/etc/fstab
 
 # Rename network interfaces according to network-config setting
 mkdir -p /var/lib/lima-init
