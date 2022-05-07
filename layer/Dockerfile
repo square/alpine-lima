@@ -1,6 +1,3 @@
-### docker
-FROM docker:20.10 as docker
-
 ### base
 FROM ubuntu:22.04
 
@@ -14,7 +11,8 @@ RUN apt update && apt install -y --no-install-recommends \
     wget \
     htop \
     tree \
-    vim \
+    neovim \
+    nano \
     make \
     gnupg \
     sudo \
@@ -31,6 +29,3 @@ RUN apt update && apt install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN update-ca-certificates
-
-# docker client
-COPY --from=docker /usr/local/bin/docker /usr/local/bin/
