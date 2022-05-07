@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # install essential packages
 RUN apt update && apt install -y --no-install-recommends \
+    tini \
     git \
     curl \
     wget \
