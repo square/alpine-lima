@@ -26,7 +26,11 @@ RUN apt update && apt install -y --no-install-recommends \
     iproute2 \
     net-tools \
     openssh-server \
+    apt-transport-https \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
+
+RUN update-ca-certificates
 
 # docker client
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
