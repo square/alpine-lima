@@ -10,7 +10,7 @@ on:
   pull_request:
 
 env:
-  ALPINE_VERSION: 3.16.0
+  ALPINE_VERSION: 3.16.1
   DOCKER_BUILDKIT: 1
 
 jobs:
