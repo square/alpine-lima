@@ -20,6 +20,9 @@ profile_lima() {
         if [ "${LIMA_INSTALL_CLOUD_INIT}" == "true" ]; then
             apks="$apks cloud-init"
         fi
+        if [ "${LIMA_INSTALL_CLOUD_UTILS_GROWPART}" == "true" ]; then
+            apks="$apks cloud-utils-growpart partx"
+        fi
         if [ "${LIMA_INSTALL_CNI_PLUGINS}" == "true" ] || [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
             apks="$apks cni-plugins"
         fi
@@ -28,6 +31,9 @@ profile_lima() {
         fi
         if [ "${LIMA_INSTALL_CURL}" == "true" ]; then
             apks="$apks curl"
+        fi
+        if [ "${LIMA_INSTALL_E2FSPROGS_EXTRA}" == "true" ]; then
+            apks="$apks e2fsprogs-extra"
         fi
         if [ "${LIMA_INSTALL_GIT}" == "true" ]; then
             apks="$apks git"
@@ -54,5 +60,8 @@ profile_lima() {
         fi
         if [ "${LIMA_INSTALL_IPTABLES}" == "true" ] || [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
             apks="$apks iptables ip6tables"
+        fi
+        if [ "${LIMA_INSTALL_ZSTD}" == "true" ]; then
+            apks="$apks zstd"
         fi
 }

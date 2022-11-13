@@ -148,6 +148,11 @@ datasource_list: [ NoCloud, None ]
 EOF
 fi
 
+if [ "${LIMA_INSTALL_CLOUD_UTILS_GROWPART}" == "true" ]; then
+    echo cloud-utils-growpart >> "$tmp"/etc/apk/world
+    echo partx >> "$tmp"/etc/apk/world
+fi
+
 if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
     echo libseccomp >>"$tmp"/etc/apk/world
     echo runc >>"$tmp"/etc/apk/world
@@ -228,6 +233,10 @@ if [ "${LIMA_INSTALL_CURL}" == "true" ]; then
     echo "curl" >> "$tmp"/etc/apk/world
 fi
 
+if [ "${LIMA_INSTALL_E2FSPROGS_EXTRA}" == "true" ]; then
+    echo "e2fsprogs-extra" >> "$tmp"/etc/apk/world
+fi
+
 if [ "${LIMA_INSTALL_GIT}" == "true" ]; then
     echo "git" >> "$tmp"/etc/apk/world
 fi
@@ -272,6 +281,10 @@ fi
 
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
     echo "sshfs" >>"$tmp"/etc/apk/world
+fi
+
+if [ "${LIMA_INSTALL_ZSTD}" == "true" ]; then
+    echo "zstd" >> "$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
