@@ -149,8 +149,8 @@ EOF
 fi
 
 if [ "${LIMA_INSTALL_CLOUD_UTILS_GROWPART}" == "true" ]; then
-    echo cloud-utils-growpart >> "$tmp"/etc/apk/world
-    echo partx >> "$tmp"/etc/apk/world
+    echo cloud-utils-growpart >>"$tmp"/etc/apk/world
+    echo partx >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_DOCKER}" == "true" ]; then
@@ -206,7 +206,7 @@ if [ "${LIMA_INSTALL_BINFMT_MISC}" == "true" ]; then
 
     # qemu from tonistiigi/binfmt is patched to assume preserve-argv; set it here.
     mkdir -p "${tmp}/etc/conf.d"
-    echo 'binfmt_flags="POCF"' > "${tmp}/etc/conf.d/qemu-binfmt"
+    echo 'binfmt_flags="POCF"' >"${tmp}/etc/conf.d/qemu-binfmt"
 
     rc_add qemu-binfmt default
 fi
@@ -230,15 +230,15 @@ if [ "${LIMA_INSTALL_CNI_PLUGIN_FLANNEL}" == "true" ]; then
 fi
 
 if [ "${LIMA_INSTALL_CURL}" == "true" ]; then
-    echo "curl" >> "$tmp"/etc/apk/world
+    echo "curl" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_E2FSPROGS_EXTRA}" == "true" ]; then
-    echo "e2fsprogs-extra" >> "$tmp"/etc/apk/world
+    echo "e2fsprogs-extra" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_GIT}" == "true" ]; then
-    echo "git" >> "$tmp"/etc/apk/world
+    echo "git" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_K3S}" == "true" ]; then
@@ -276,7 +276,7 @@ if [ "${LIMA_INSTALL_NERDCTL}" == "true" ]; then
 fi
 
 if [ "${LIMA_INSTALL_OPENSSH_SFTP_SERVER}" == "true" ]; then
-    echo "openssh-sftp-server" >> "$tmp"/etc/apk/world
+    echo "openssh-sftp-server" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
@@ -284,7 +284,7 @@ if [ "${LIMA_INSTALL_SSHFS}" == "true" ]; then
 fi
 
 if [ "${LIMA_INSTALL_ZSTD}" == "true" ]; then
-    echo "zstd" >> "$tmp"/etc/apk/world
+    echo "zstd" >>"$tmp"/etc/apk/world
 fi
 
 if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
@@ -296,6 +296,10 @@ if [ "${LIMA_INSTALL_CRI_DOCKERD}" == "true" ]; then
     #Copy the LICENSE file for cri-dockerd
     mkdir -p "${tmp}/usr/share/doc/cri-dockerd/"
     cp /home/build/cri-dockerd.license "${tmp}/usr/share/doc/cri-dockerd/LICENSE"
+fi
+
+if [ "${LIMA_INSTALL_FSTRIM}" == "true" ]; then
+    echo "fstrim" >>"$tmp"/etc/apk/world
 fi
 
 mkdir -p "${tmp}/usr/share/colima"
