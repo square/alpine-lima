@@ -44,7 +44,7 @@ profile_lima() {
         apks="$apks socat xz"
     fi
     if [ "${LIMA_INSTALL_LIMA_INIT}" == "true" ]; then
-        apks="$apks e2fsprogs lsblk sfdisk shadow sudo udev"
+        apks="$apks dhclient e2fsprogs iproute2 lsblk sfdisk shadow sudo udev"
     fi
     if [ "${LIMA_INSTALL_K3S}" == "true" ]; then
         apks="$apks k3s"

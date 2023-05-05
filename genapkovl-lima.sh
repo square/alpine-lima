@@ -114,7 +114,9 @@ if [ "${LIMA_INSTALL_LIMA_INIT}" == "true" ]; then
     cp /home/build/lima-init.sh "${tmp}/usr/bin/lima-init"
     cp /home/build/lima-network.awk "${tmp}/usr/bin/lima-network.awk"
 
+    echo dhclient >>"$tmp"/etc/apk/world
     echo e2fsprogs >>"$tmp"/etc/apk/world
+    echo iproute2 >>"$tmp"/etc/apk/world
     echo lsblk >>"$tmp"/etc/apk/world
     echo sfdisk >>"$tmp"/etc/apk/world
     echo shadow >>"$tmp"/etc/apk/world
