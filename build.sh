@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
+# Ensure this variable is defined (defaulting to empty string) to appease `set -u` above
+GITHUB_ACTIONS=${GITHUB_ACTIONS:-}
+
 DOCKER=${DOCKER:-docker}
 
 mkdir -p iso
@@ -38,6 +41,18 @@ ${DOCKER} run --rm \
     --repository "http://dl-cdn.alpinelinux.org/alpine/${REPO_VERSION}/community" \
     --profile lima
 
-# sha512sum is not on macOS by default, fixable with `brew install coreutils`
+cd iso
+
 ISO="alpine-lima-${EDITION}-${ALPINE_VERSION}-${ARCH}.iso"
-cd iso && sha512sum "${ISO}" >"${ISO}.sha512sum"
+
+if [ -n "$GITHUB_ACTIONS" ]; then
+    # To prevent "Cannot set the file group: Operation not permitted" error when running `xz` on the ISO file below
+    sudo chown $(id -u):$(id -g) "${ISO}"
+fi
+
+# --threads=0 means "use all available CPU cores"
+# --force ensures any existing artifact is deleted so we can replace it
+xz --force --threads=0 "${ISO}"
+ISO_XZ="${ISO}.xz"
+
+openssl sha512 -r "${ISO_XZ}" > "${ISO_XZ}.sha512sum"
