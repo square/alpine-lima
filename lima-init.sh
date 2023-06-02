@@ -97,10 +97,10 @@ EOF
 
 # Add static nameservers to /etc/resolv.conf
 DNS=$(awk '/nameservers:/{flag=1; next} /^[^ ]/{flag=0} flag {gsub("^ +- +", ""); print}' \
-    "${LIMA_CIDATA_MNT}"/user-data | tr "\n" " ")
+    "${LIMA_CIDATA_MNT}"/user-data | tr --squeeze-repeats "\n" "\n" | paste -s -d ',' - | tr --delete "\n")
 
 if [ -n "${DNS}" ]; then
-    sed -i "/export dns/a dns=\"${DNS}\"" /usr/share/udhcpc/default.script
+    echo "prepend domain-name-servers ${DNS};" >> /etc/dhcp/dhclient.conf
 fi
 
 # Remove default CA certs

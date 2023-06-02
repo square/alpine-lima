@@ -9,7 +9,7 @@ profile_lima() {
     arch="aarch64 x86 x86_64"
     initfs_cmdline="modules=loop,squashfs,sd-mod,usb-storage"
     kernel_addons=
-    kernel_flavors="virt"
+    kernel_flavors="lts"
     kernel_cmdline="console=tty0 console=ttyS0,115200"
     syslinux_serial="0 115200"
     apkovl="genapkovl-lima.sh"
@@ -44,7 +44,7 @@ profile_lima() {
         apks="$apks socat xz"
     fi
     if [ "${LIMA_INSTALL_LIMA_INIT}" == "true" ]; then
-        apks="$apks e2fsprogs lsblk sfdisk shadow sudo udev"
+        apks="$apks dhclient e2fsprogs iproute2 lsblk sfdisk shadow sudo udev"
     fi
     if [ "${LIMA_INSTALL_K3S}" == "true" ]; then
         apks="$apks k3s"

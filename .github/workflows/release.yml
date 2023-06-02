@@ -48,8 +48,8 @@ jobs:
           tag="${GITHUB_REF##*/}"
 
           hub release create
-          -a iso/alpine-lima-clm-${ALPINE_VERSION}-aarch64.iso
-          -a iso/alpine-lima-clm-${ALPINE_VERSION}-aarch64.iso.sha512sum
-          -a iso/alpine-lima-clm-${ALPINE_VERSION}-x86_64.iso
-          -a iso/alpine-lima-clm-${ALPINE_VERSION}-x86_64.iso.sha512sum
+          -a iso/alpine-lima-clm-${ALPINE_VERSION}-aarch64.iso.xz
+          -a iso/alpine-lima-clm-${ALPINE_VERSION}-aarch64.iso.xz.sha512sum
+          -a iso/alpine-lima-clm-${ALPINE_VERSION}-x86_64.iso.xz
+          -a iso/alpine-lima-clm-${ALPINE_VERSION}-x86_64.iso.xz.sha512sum
           -m "${tag}" --draft "${tag}"

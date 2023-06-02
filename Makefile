@@ -29,7 +29,7 @@ BINFMT_IMAGE=tonistiigi/binfmt:qemu-$(QEMU_VERSION)
 
 .PHONY: mkimage
 mkimage:
-	cd src/aports && git fetch --tags && git checkout $(GIT_TAG)
+	git submodule update --init --recursive && cd src/aports && git fetch --tags && git checkout $(GIT_TAG)
 	BUILDKIT_PROGRESS=plain $(DOCKER) build \
 		--no-cache \
 		--tag mkimage:$(ALPINE_VERSION)-$(ARCH) \
